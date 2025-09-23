@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View, Button, StyleSheet } from "react-native";
+import { Text, View, Button, StyleSheet,Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TouchableOpacity} from "react-native";
@@ -16,8 +16,10 @@ function StyledButton({ title, onPress }) {
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.top}>
-      <Text style={styles.title}>SafeHaven</Text>
-
+      <Image
+        source={require("./assets/Frame 1-2.png")}
+        style={{ width: 150, height: 150, resizeMode: "contain", marginVertical: 0 }}
+      />
         <View style={{ flex: 1 }} />
       
       <View style = {styles.bottom}>
@@ -45,12 +47,15 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} 
+         options={{ headerShown: false }} 
+        />
         <Stack.Screen name="Shelters" component={SheltersScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
