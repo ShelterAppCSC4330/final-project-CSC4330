@@ -1,8 +1,10 @@
 import * as React from "react";
-import { Text, View, Button, StyleSheet,Image } from "react-native";
+import { Text, View, Button, StyleSheet, Image, TextInput  } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TouchableOpacity} from "react-native";
+import AccountScreen from './screens/AccountScreen';
+import { Ionicons } from '@expo/vector-icons';
 
 
 function StyledButton({ title, onPress }) {
@@ -47,10 +49,17 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} 
-         options={{ headerShown: false }} 
-        />
-        <Stack.Screen name="Shelters" component={SheltersScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} options={({ navigation }) => ({
+            title: 'Home',
+            headerRight: () => (
+              <TouchableOpacity onPress={() => navigation.navigate('Account')} style={{ paddingHorizontal: 8 }}>
+                <Ionicons name="person-circle-outline" size={30} />
+              </TouchableOpacity>
+            )
+          })}
+          />
+          <Stack.Screen name="Shelters" component={SheltersScreen} />
+          <Stack.Screen name="Account" component={AccountScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
