@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TouchableOpacity} from "react-native";
 import AccountScreen from './screens/AccountScreen';
 import { Ionicons } from '@expo/vector-icons';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 function StyledButton({ title, onPress }) {
   return (
@@ -17,11 +17,16 @@ function StyledButton({ title, onPress }) {
 
 function HomeScreen({ navigation }) {
   return (
+    <LinearGradient
+      colors={['#e6f2ff' ,'#6696EF']} // top to bottom gradient
+      style={styles.gradient}
+    >
     <View style={styles.top}>
       <Image
         source={require("./assets/Frame 1-2.png")}
         style={{ width: 150, height: 150, resizeMode: "contain", marginVertical: 0 }}
       />
+      <Text  style ={styles.welcomeText}>Welcome to Refuge!Prepardness begins here.</Text>
         <View style={{ flex: 1 }} />
       
       <View style = {styles.bottom}>
@@ -31,6 +36,7 @@ function HomeScreen({ navigation }) {
       />
       </View>
     </View>
+    </LinearGradient>
   );
 }
 
@@ -86,10 +92,23 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
   },
+    gradient: {
+  flex: 1,
+  justifyContent: "center",
+  alignItems: "center",
+  },
+
+  welcomeText:{
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#6696EF',
+    textAlign: 'center',
+    marginTop: 20,
+  }
 });
 const buttonStyles = StyleSheet.create({
   button: {
-    backgroundColor: "#FF3B30",
+    backgroundColor: "#f4362cff",
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 25,
@@ -101,4 +120,7 @@ const buttonStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+
+
+
 });
