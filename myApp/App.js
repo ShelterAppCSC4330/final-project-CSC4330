@@ -4,6 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TouchableOpacity} from "react-native";
 import AccountScreen from './screens/AccountScreen';
+import DropdownMenu from './components/DropdownMenu';
+import InfoScreen from './screens/InfoScreen';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -26,7 +28,7 @@ function HomeScreen({ navigation }) {
         source={require("./assets/Frame 1-2.png")}
         style={{ width: 150, height: 150, resizeMode: "contain", marginVertical: 0 }}
       />
-      <Text  style ={styles.welcomeText}>Welcome to Refuge!Prepardness begins here.</Text>
+      <Text  style ={styles.welcomeText}>Welcome to Refuge!{'\n'}Preparedness begins here.</Text>
         <View style={{ flex: 1 }} />
       
       <View style = {styles.bottom}>
@@ -61,11 +63,13 @@ export default function App() {
               <TouchableOpacity onPress={() => navigation.navigate('Account')} style={{ paddingHorizontal: 8 }}>
                 <Ionicons name="person-circle-outline" size={30} />
               </TouchableOpacity>
-            )
+            ),
+            headerRight: () => <DropdownMenu navigation={navigation} />,
           })}
           />
           <Stack.Screen name="Shelters" component={SheltersScreen} />
           <Stack.Screen name="Account" component={AccountScreen} />
+          <Stack.Screen name="Info" component={InfoScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
