@@ -56,21 +56,27 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} options={({ navigation }) => ({
-            title: 'Home',
-            headerRight: () => (
-              <TouchableOpacity onPress={() => navigation.navigate('Account')} style={{ paddingHorizontal: 8 }}>
-                <Ionicons name="person-circle-outline" size={30} />
-              </TouchableOpacity>
-            ),
-            headerRight: () => <DropdownMenu navigation={navigation} />,
-          })}
-          />
-          <Stack.Screen name="Shelters" component={SheltersScreen} />
-          <Stack.Screen name="Account" component={AccountScreen} />
-          <Stack.Screen name="Info" component={InfoScreen} />
-      </Stack.Navigator>
+    <Stack.Navigator
+  screenOptions={{
+    headerStyle: {
+      backgroundColor: '#1f2937', 
+    },
+    headerTintColor: '#ffffff', 
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      fontSize: 20,
+    },
+  }}
+>
+  <Stack.Screen name="Home" component={HomeScreen} options={({ navigation }) => ({
+    title: 'Home',
+    headerRight: () => <DropdownMenu navigation={navigation} />,
+  })}
+  />
+  <Stack.Screen name="Shelters" component={SheltersScreen} />
+  <Stack.Screen name="Account" component={AccountScreen} />
+  <Stack.Screen name="Info" component={InfoScreen} />
+</Stack.Navigator>
     </NavigationContainer>
   );
 }
@@ -79,7 +85,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#eef6ff",
+    backgroundColor: "#1f2937",
   },
   top: {
     flex: 1,

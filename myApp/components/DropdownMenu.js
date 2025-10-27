@@ -39,7 +39,7 @@ export default function DropdownMenu({ navigation }) {
 
             <TouchableOpacity style={styles.item} onPress={() => go('Info')}>
               <Ionicons name="information-circle-outline" size={25} style={styles.itemIcon} />
-              <Text style={styles.itemText}>Info</Text>
+              <Text style={styles.itemText}>Courses</Text>
             </TouchableOpacity>
           </View>
         </View>
