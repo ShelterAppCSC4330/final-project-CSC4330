@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-function CourseButton({ title }) {
+function CourseButton({ title, onPress }) {
   return (
-    <TouchableOpacity style={styles.card} activeOpacity={0.8}>
+    <TouchableOpacity style={styles.card} activeOpacity={0.8} onPress = {onPress}>
       <View style={styles.iconContainer}>
         <Text style={styles.icon}>📚</Text>
       </View>
