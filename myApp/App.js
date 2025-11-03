@@ -9,6 +9,7 @@ import InfoScreen from './screens/InfoScreen';
 import ProfileScreen from "./screens/ProfileScreen";
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import CourseScreen from './screens/CourseScreen';
 
 function StyledButton({ title, onPress }) {
   return (
@@ -78,6 +79,11 @@ export default function App() {
   <Stack.Screen name="Account" component={AccountScreen} />
   <Stack.Screen name="Info" component={InfoScreen} />
   <Stack.Screen name="Profile" component={ProfileScreen} />
+  <Stack.Screen name="Course" component={CourseScreen}
+    options={({ route }) => ({
+    title: route.params?.title || 'Course'
+  })}
+/>
 </Stack.Navigator>
     </NavigationContainer>
   );
