@@ -6,6 +6,7 @@ import { TouchableOpacity} from "react-native";
 import AccountScreen from './screens/AccountScreen';
 import DropdownMenu from './components/DropdownMenu';
 import InfoScreen from './screens/InfoScreen';
+import ProfileScreen from "./screens/ProfileScreen";
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -76,6 +77,7 @@ export default function App() {
   <Stack.Screen name="Shelters" component={SheltersScreen} />
   <Stack.Screen name="Account" component={AccountScreen} />
   <Stack.Screen name="Info" component={InfoScreen} />
+  <Stack.Screen name="Profile" component={ProfileScreen} />
 </Stack.Navigator>
     </NavigationContainer>
   );
