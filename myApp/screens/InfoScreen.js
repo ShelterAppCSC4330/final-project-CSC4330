@@ -5,17 +5,12 @@ import CourseButton from '../components/CourseButton';
 
 export default function InfoScreen({ navigation }) {
   const handleCoursePress = (courseTitle) => {
-    console.log('Button pressed!', courseTitle);
-    console.log('Navigation object:', navigation);
     navigation.navigate('Course', { title: courseTitle });
   };
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}> Preparedness Training</Text>
-        <Text style={styles.text}>
-          Select a course to begin your preparedness journey.
-        </Text>
       </View>
 
       <View style={styles.coursesContainer}>
@@ -23,7 +18,8 @@ export default function InfoScreen({ navigation }) {
         <CourseButton title="Emergency Supplies" onPress = {() => handleCoursePress("Emergency Supplies")}/>
         <CourseButton title="Evacuation Planning" onPress = {() => handleCoursePress("Evacuation Planning")} />
         <CourseButton title ="First Aid Basics" onPress = {() => handleCoursePress("First Aid Basics")}/>
-        <CourseButton title ="Food Preperation" onPress = {() => handleCoursePress("Food Preperation")}/>
+        <CourseButton title ="Food Preparation and Storage" onPress = {() => handleCoursePress("Food Preparation and Storage")}/>
+        <CourseButton title ="Water" onPress = {() => handleCoursePress("Water")}/>
       </View>
     </ScrollView>
   );

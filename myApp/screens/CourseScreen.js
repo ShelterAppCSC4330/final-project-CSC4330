@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity,Image} from 'react-native';
 import * as CourseData from '../data/coursesData';
 
 export default function CourseScreen({ route }) {
-  console.log('=== CourseScreen Loaded ===');
-  console.log('CourseData module:', CourseData);
   
   const { title } = route.params;
-  console.log('Title from params:', title);
-  
-
   const coursesData = CourseData.coursesData;
-  console.log('coursesData:', coursesData);
   
   if (!coursesData) {
     return (
@@ -21,10 +15,10 @@ export default function CourseScreen({ route }) {
     );
   }
   
-  console.log('coursesData keys:', Object.keys(coursesData));
+  
   
   const course = coursesData[title];
-  console.log('Found course:', course);
+
   
   const [currentSection, setCurrentSection] = useState(0);
 
@@ -71,10 +65,32 @@ export default function CourseScreen({ route }) {
           </View>
         </View>
 
-        <View style={styles.content}>
+       <View style={styles.content}>
           <Text style={styles.sectionTitle}>{section.title}</Text>
           <Text style={styles.text}>{section.content}</Text>
+
+          {/* Render bullet list if present */}
+          {section.list && (
+            <View style={styles.listContainer}>
+              {section.list.map((item, index) => (
+                <View key={index} style={styles.listItem}>
+                  <Text style={styles.bullet}>{'\u2022'}</Text>
+                  <Text style={styles.listText}>{item}</Text>
+                </View>
+              ))}
+            </View>
+          )}
+
+          {/* Render image if present */}
+          {section.image && (
+            <Image
+              source={section.image}
+              style={styles.sectionImage}
+              resizeMode="cover"
+            />
+          )}
         </View>
+
       </ScrollView>
 
       <View style={styles.navigation}>
@@ -142,11 +158,20 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     marginBottom: 16,
   },
+
   text: {
     fontSize: 16,
     color: '#d1d5db',
     lineHeight: 26,
   },
+
+  sectionImage: {
+  width: '100%',
+  height: 200,
+  borderRadius: 10,
+  marginTop: 16,
+  },
+
   errorText: {
     fontSize: 18,
     color: '#ef4444',
@@ -189,4 +214,26 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#ffffff',
   },
+  listContainer: {
+  marginTop: 12,
+  paddingLeft: 10,
+  },
+  listItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 8,
+  },
+  bullet: {
+    color: '#4da6ff',
+    fontSize: 18,
+    lineHeight: 22,
+    marginRight: 8,
+  },
+  listText: {
+    color: '#d1d5db',
+    fontSize: 16,
+    lineHeight: 22,
+    flex: 1,
+  },
+
 });
