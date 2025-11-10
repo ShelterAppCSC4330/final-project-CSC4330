@@ -8,7 +8,6 @@ import DropdownMenu from './components/DropdownMenu';
 import InfoScreen from './screens/InfoScreen';
 import ProfileScreen from "./screens/ProfileScreen";
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import CourseScreen from './screens/CourseScreen';
 
 function StyledButton({ title, onPress }) {
@@ -21,26 +20,32 @@ function StyledButton({ title, onPress }) {
 
 function HomeScreen({ navigation }) {
   return (
-    <LinearGradient
-      colors={['#e6f2ff' ,'#6696EF']} // top to bottom gradient
-      style={styles.gradient}
-    >
+   <View style={styles.container}>
     <View style={styles.top}>
       <Image
-        source={require("./assets/Frame 1-2.png")}
-        style={{ width: 150, height: 150, resizeMode: "contain", marginVertical: 0 }}
+        source={require("./assets/Frame 1-3.png")}
+        style={{ width: 200, height: 200, resizeMode: "contain", marginVertical: 0 }}
       />
       <Text  style ={styles.welcomeText}>Welcome to Refuge!{'\n'}Preparedness begins here.</Text>
-        <View style={{ flex: 1 }} />
+
+      {/* Notification Center */}
+      <View style={styles.notificationBox}>
+        <Text style={styles.notificationTitle}>Notification Center</Text>
+        <Text style={styles.notificationText}>
+          No new alerts. Check back for emergency updates and important notices.
+        </Text>
+      </View>
+        
+      <View style={{ flex: 1 }} />
       
       <View style = {styles.bottom}>
       <StyledButton
-        title="Go to Shelters"
+        title="Find Shelters"
         onPress={() => navigation.navigate("Shelters")}
       />
       </View>
     </View>
-    </LinearGradient>
+    </View>
   );
 }
 
@@ -94,6 +99,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#1f2937",
+    borderColor: "#2563eb",     
+    borderWidth: 5,             
+    borderRadius: 2,                        
+    overflow: "hidden",   
   },
   top: {
     flex: 1,
@@ -110,23 +119,41 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
   },
-    gradient: {
-  flex: 1,
-  justifyContent: "center",
-  alignItems: "center",
+  
+   notificationBox: {
+    backgroundColor: "#2563eb", 
+    padding: 20,
+    borderRadius: 20,
+    width: "70%",
+    alignSelf: "center", 
+    marginTop: 30,
+    shadowColor: "#2563eb",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 3,
   },
-
+  notificationTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#ffffff",
+    marginBottom: 5,
+  },
+  notificationText: {
+    fontSize: 16,
+    color: "#d1d5db", 
+  },
   welcomeText:{
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#6696EF',
+    color: '#ffffff',
     textAlign: 'center',
     marginTop: 20,
   }
 });
 const buttonStyles = StyleSheet.create({
   button: {
-    backgroundColor: "#f4362cff",
+    backgroundColor: "#2563eb",
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 25,
