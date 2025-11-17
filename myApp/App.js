@@ -9,6 +9,8 @@ import InfoScreen from './screens/InfoScreen';
 import ProfileScreen from "./screens/ProfileScreen";
 import { Ionicons } from '@expo/vector-icons';
 import CourseScreen from './screens/CourseScreen';
+import QuizScreen from "./screens/QuizScreen";
+
 
 function StyledButton({ title, onPress }) {
   return (
@@ -84,7 +86,8 @@ export default function App() {
   <Stack.Screen name="Account" component={AccountScreen} />
   <Stack.Screen name="Info" component={InfoScreen} />
   <Stack.Screen name="Profile" component={ProfileScreen} />
-  <Stack.Screen name="Course" component={CourseScreen}
+  <Stack.Screen name="Quiz" component={QuizScreen} options={{ title: "Course Quiz" }} />
+  <Stack.Screen name="Course" component={CourseScreen} 
     options={({ route }) => ({
     title: route.params?.title || 'Course'
   })}

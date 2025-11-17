@@ -1,11 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 function CourseButton({ title, onPress }) {
   return (
     <TouchableOpacity style={styles.card} activeOpacity={0.8} onPress = {onPress}>
       <View style={styles.iconContainer}>
-        <Text style={styles.icon}>📚</Text>
+         <Image
+            source={require('../assets/Frame 1-3.png')} 
+            style={styles.logo}
+            resizeMode="contain"
+        />
       </View>
       <View style={styles.content}>
         <Text style={styles.cardTitle}>{title}</Text>
@@ -35,17 +39,20 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
     borderLeftColor: '#2563eb',  // Blue accent
   },
-  iconContainer: {
-    width: 70,
-    height: 70,
-    backgroundColor: '#374151',  // Medium grey
-    borderRadius: 16,
+    iconContainer: {
+    width: 60,
+    height: 60,
+    backgroundColor: '#374151',
+    borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16,
   },
-  icon: {
-    fontSize: 36,
+
+  logo: {
+    width: 70,
+    height: 70,
+    resizeMode: 'contain',
   },
   content: {
     flex: 1,
