@@ -7,6 +7,8 @@ import AccountScreen from './screens/AccountScreen';
 import DropdownMenu from './components/DropdownMenu';
 import InfoScreen from './screens/InfoScreen';
 import ProfileScreen from "./screens/ProfileScreen";
+import ShelterScreen from './screens/ShelterScreen';
+import { ShelterProvider } from './context/ShelterProvider';
 import { Ionicons } from '@expo/vector-icons';
 import CourseScreen from './screens/CourseScreen';
 import QuizScreen from "./screens/QuizScreen";
@@ -51,49 +53,42 @@ function HomeScreen({ navigation }) {
   );
 }
 
-function SheltersScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>🏠 Available Shelters</Text>
-      <Text style={styles.text}>Here’s where shelter info will go.</Text>
-    </View>
-  );
-}
-
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-    <Stack.Navigator
-  screenOptions={{
-    headerStyle: {
-      backgroundColor: '#1f2937', 
-    },
-    headerTintColor: '#ffffff', 
-    headerTitleStyle: {
-      fontWeight: 'bold',
-      fontSize: 20,
-    },
-  }}
->
-  <Stack.Screen name="Home" component={HomeScreen} options={({ navigation }) => ({
-    title: 'Home',
-    headerRight: () => <DropdownMenu navigation={navigation} />,
-  })}
+    <ShelterProvider>
+      <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#1f2937', 
+          },
+          headerTintColor: '#ffffff', 
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+          },
+        }}
+      >
+        <Stack.Screen name="Home" component={HomeScreen} options={({ navigation }) => ({
+          title: 'Home',
+          headerRight: () => <DropdownMenu navigation={navigation} />,
+        })}
+    />
+    <Stack.Screen name="Shelters" component={ShelterScreen} />
+    <Stack.Screen name="Account" component={AccountScreen} />
+    <Stack.Screen name="Info" component={InfoScreen} />
+    <Stack.Screen name="Profile" component={ProfileScreen} />
+    <Stack.Screen name="Quiz" component={QuizScreen} options={{ title: "Course Quiz" }} />
+    <Stack.Screen name="Course" component={CourseScreen}
+      options={({ route }) => ({
+      title: route.params?.title || 'Course'
+    })}
   />
-  <Stack.Screen name="Shelters" component={SheltersScreen} />
-  <Stack.Screen name="Account" component={AccountScreen} />
-  <Stack.Screen name="Info" component={InfoScreen} />
-  <Stack.Screen name="Profile" component={ProfileScreen} />
-  <Stack.Screen name="Quiz" component={QuizScreen} options={{ title: "Course Quiz" }} />
-  <Stack.Screen name="Course" component={CourseScreen} 
-    options={({ route }) => ({
-    title: route.params?.title || 'Course'
-  })}
-/>
-</Stack.Navigator>
-    </NavigationContainer>
+      </Stack.Navigator>
+      </NavigationContainer>
+    </ShelterProvider>
   );
 }
 
