@@ -1,5 +1,5 @@
 
-
+//This file contains all of the data for courses and quizzes
 
 export const coursesData = {
   "Hurricane Basics": {
@@ -23,10 +23,34 @@ export const coursesData = {
       },
       {
         title: "Hurricane Season",
-        content:"Hurricane season starts June 1st and ends November 30th",
+        content:"Hurricane season officially runs from June 1st through November 30th each year, marking the period when conditions are most favorable for tropical storms and hurricanes to form in the Atlantic Ocean, Caribbean Sea, and Gulf of Mexico. Peak activity typically occurs between mid-August and late October, when ocean temperatures are warmest and atmospheric conditions are most unstable.",
         
       }
+    ],
+
+     quiz: [
+      {
+        question: "At what wind speed does a storm become a hurricane?",
+        options: ["39 mph", "74 mph", "100 mph", "120 mph"],
+        answer: "74 mph",
+      },
+      {
+        question: "Which organization provides reliable hurricane tracking models?",
+        options: ["NASA", "FEMA", "NOAA", "CDC"],
+        answer: "NOAA",
+      },
+      {
+        question: "When does hurricane season officially begin?",
+        options: ["May 1st", "June 1st", "July 1st", "August 1st"],
+        answer: "June 1st",
+      },
+      {
+        question: "What category represents the most severe hurricanes?",
+        options: ["Category 1", "Category 3", "Category 5", "Category 7"],
+        answer: "Category 5",
+       }
     ]
+    
   },
   "Emergency Supplies": {
     id: 2,
@@ -69,7 +93,60 @@ export const coursesData = {
         title: "Fuel",
         content: "During hurricane season it becomes imperative to ensure your veichle is fueled incase of a need to evacuate, as gas stations could be out of fuel for a week or more after a disaster depending on severity. Other types of fuel are also neccessary such as propane, diesel, and butane. These fuels can be used for stoves, generators, and heaters"
       }
+    ],
+      quiz: [
+      {
+        question: "Why is it important to keep emergency supplies?",
+        options: [
+          "To decorate your home",
+          "To be self-sufficient and safe during unexpected crises",
+          "To comply with local government regulations",
+          "To save space and reduce clutter"
+        ],
+        answer: "To be self-sufficient and safe during unexpected crises",
+      },
+      {
+        question: "Which of the following is considered an essential emergency item?",
+        options: [
+          "Board games",
+          "Extra blankets",
+          "Canned food and clean water",
+          "Portable speaker"
+        ],
+        answer: "Canned food and clean water",
+      },
+      {
+        question: "How much water should you store per person per day during an emergency?",
+        options: [
+          "One cup",
+          "One liter",
+          "One gallon",
+          "Five gallons"
+        ],
+        answer: "One gallon",
+      },
+      {
+        question: "Which of the following items should be included in a first aid kit?",
+        options: [
+          "Cooking utensils and lighters",
+          "Latex gloves, bandages, and antiseptic ointment",
+          "Sunscreen and sunglasses",
+          "Paper plates and cutlery"
+        ],
+        answer: "Latex gloves, bandages, and antiseptic ointment",
+      },
+      {
+        question: "Why is fuel an important resource during hurricane season?",
+        options: [
+          "It powers decorations and lights",
+          "It keeps vehicles and generators running when gas stations are closed",
+          "It can be traded for other items",
+          "It helps store food longer"
+        ],
+        answer: "It keeps vehicles and generators running when gas stations are closed",
+      }
     ]
+    
   },
   "Evacuation Planning": {
     id: 3,
@@ -119,7 +196,60 @@ export const coursesData = {
 
         ]
       }
-    ]
+    ],
+
+          quiz: [
+        {
+          question: "Why is evacuation planning important during disasters?",
+          options: [
+            "It helps you pack more belongings before leaving",
+            "It eliminates confusion and ensures everyone knows what to do during an emergency",
+            "It guarantees your home will not be damaged",
+            "It ensures faster recovery of utilities after a storm"
+          ],
+          answer: "It eliminates confusion and ensures everyone knows what to do during an emergency",
+        },
+        {
+          question: "What is the first step in creating an evacuation plan?",
+          options: [
+            "Stocking up on food and water",
+            "Learning your community’s hazards and evacuation routes",
+            "Contacting local media outlets",
+            "Building a storm shelter"
+          ],
+          answer: "Learning your community’s hazards and evacuation routes",
+        },
+        {
+          question: "What should a family communication plan include?",
+          options: [
+            "An out-of-area contact person and meeting locations",
+            "Only local emergency numbers",
+            "Social media handles of family members",
+            "A group chat for photos and updates"
+          ],
+          answer: "An out-of-area contact person and meeting locations",
+        },
+        {
+          question: "Which of the following steps should you take before leaving your home during an evacuation?",
+          options: [
+            "Leave lights and electronics on for safety",
+            "Take photos for insurance and secure outdoor furniture",
+            "Fill bathtubs with water and leave windows open",
+            "Store valuables in unlocked drawers"
+          ],
+          answer: "Take photos for insurance and secure outdoor furniture",
+        },
+        {
+          question: "Which of the following items should always be in your evacuation 'go bag'?",
+          options: [
+            "Board games and souvenirs",
+            "Food, water, ID, cash, and important documents",
+            "Cleaning supplies and paint",
+            "House keys and kitchen utensils"
+          ],
+          answer: "Food, water, ID, cash, and important documents",
+        }
+      ]
   },
   "First Aid Basics": {
     id: 4,
@@ -183,6 +313,59 @@ export const coursesData = {
       }
 
 
+    ],
+
+        quiz: [
+      {
+        question: "Why is basic first aid knowledge important during emergencies?",
+        options: [
+          "It allows you to stabilize injuries and save lives before medical help arrives",
+          "It helps you avoid calling emergency responders",
+          "It replaces the need for a first aid kit",
+          "It prevents all injuries from happening"
+        ],
+        answer: "It allows you to stabilize injuries and save lives before medical help arrives",
+      },
+      {
+        question: "What should you regularly check when maintaining your first aid kit?",
+        options: [
+          "The color of the container",
+          "Expiration dates and used or damaged supplies",
+          "Whether the kit matches your home decor",
+          "The price of new medical supplies online"
+        ],
+        answer: "Expiration dates and used or damaged supplies",
+      },
+      {
+        question: "Which of the following is NOT typically included in a basic first aid kit?",
+        options: [
+          "Bandages and antiseptic wipes",
+          "Pain relievers and gloves",
+          "Hydrogen peroxide and tweezers",
+          "Cooking utensils and measuring cups"
+        ],
+        answer: "Cooking utensils and measuring cups",
+      },
+      {
+        question: "What should you do for a sprain according to first aid guidelines?",
+        options: [
+          "Apply heat immediately and massage the area",
+          "Use the R.I.C.E. method — Rest, Ice, Compression, Elevation",
+          "Wrap it tightly with any available material",
+          "Ignore it unless it swells significantly"
+        ],
+        answer: "Use the R.I.C.E. method — Rest, Ice, Compression, Elevation",
+      },
+      {
+        question: "Where should you store your first aid kit for best accessibility?",
+        options: [
+          "Locked in a basement cabinet",
+          "In a cool, dry place easily accessible to all family members",
+          "Inside a sealed container in the attic",
+          "Under heavy boxes to keep it safe"
+        ],
+        answer: "In a cool, dry place easily accessible to all family members",
+      }
     ]
   },
   "Food Preparation and Storage": {
@@ -242,6 +425,59 @@ export const coursesData = {
           ]
     }
 
+    ],
+
+        quiz: [
+      {
+        question: "Why is food storage important during emergencies?",
+        options: [
+          "Because grocery stores may be closed or inaccessible for days or weeks",
+          "To save money on grocery shopping",
+          "To avoid cooking during normal days",
+          "Because canned food tastes better than fresh food"
+        ],
+        answer: "Because grocery stores may be closed or inaccessible for days or weeks",
+      },
+      {
+        question: "What types of food are best for emergency storage?",
+        options: [
+          "Fresh produce and refrigerated meats",
+          "Shelf-stable, easy-to-prepare, and nutrient-rich foods",
+          "Frozen dinners and dairy products",
+          "Restaurant takeout meals"
+        ],
+        answer: "Shelf-stable, easy-to-prepare, and nutrient-rich foods",
+      },
+      {
+        question: "How much food should be stored for each person according to general guidelines?",
+        options: [
+          "Enough for 3 days",
+          "At least a two-week supply",
+          "One meal per day for a week",
+          "Enough for six months minimum"
+        ],
+        answer: "At least a two-week supply",
+      },
+      {
+        question: "Which of the following is a safe way to cook food during an emergency?",
+        options: [
+          "Use portable camping stoves or outdoor grills in ventilated areas",
+          "Cook indoors using charcoal or open flame",
+          "Use candles as a heat source for cooking",
+          "Avoid cooking and eat raw food only"
+        ],
+        answer: "Use portable camping stoves or outdoor grills in ventilated areas",
+      },
+      {
+        question: "How should food be stored to ensure long-term freshness and safety?",
+        options: [
+          "In a cool, dark, and dry place using airtight containers",
+          "Next to heating appliances for convenience",
+          "In open boxes for easy access",
+          "In humid or damp areas to prevent drying out"
+        ],
+        answer: "In a cool, dark, and dry place using airtight containers",
+      }
     ]
   },
 
@@ -299,6 +535,60 @@ export const coursesData = {
               "Dispose of waste properly and away from water sources to prevent contamination."
             ]
     }
-    ]
+    ],
+
+          quiz: [
+        {
+          question: "Why is water preparedness so critical during emergencies?",
+          options: [
+            "Because it’s useful for decoration and cleaning",
+            "Because humans can survive weeks without water",
+            "Because water is essential for survival, hygiene, and cooking when systems fail",
+            "Because bottled water lasts forever"
+          ],
+          answer: "Because water is essential for survival, hygiene, and cooking when systems fail",
+        },
+        {
+          question: "What is the minimum amount of water you should store per person per day?",
+          options: [
+            "Half a gallon",
+            "One gallon",
+            "Two gallons",
+            "Five gallons"
+          ],
+          answer: "One gallon",
+        },
+        {
+          question: "Which type of container is best for long-term water storage?",
+          options: [
+            "Used milk jugs or open buckets",
+            "Food-grade plastic or stainless steel containers",
+            "Cardboard boxes lined with plastic",
+            "Any container as long as it’s clean"
+          ],
+          answer: "Food-grade plastic or stainless steel containers",
+        },
+        {
+          question: "Which of the following is a proper water purification method?",
+          options: [
+            "Boil for at least one minute or use purification tablets",
+            "Shake the water bottle vigorously for oxygenation",
+            "Add flavored drink mix to mask unsafe taste",
+            "Leave it uncovered overnight to 'breathe'"
+          ],
+          answer: "Boil for at least one minute or use purification tablets",
+        },
+        {
+          question: "Why is clean water also essential for sanitation during disasters?",
+          options: [
+            "It prevents illness and supports hygiene when normal systems fail",
+            "It helps make food taste better",
+            "It keeps furniture and clothes clean",
+            "It is used only for cooking and drinking"
+          ],
+          answer: "It prevents illness and supports hygiene when normal systems fail",
+        }
+      ]
+
   }
 };

@@ -17,7 +17,7 @@ export default function DropdownMenu({ navigation }) {
         onPress={() => setOpen(true)}
         style={{ paddingHorizontal: 8 }}
       >
-        <Ionicons name="menu" size={30} />
+        <Ionicons name="menu" size={30} color = "#2563eb" />
       </TouchableOpacity>
 
       <Modal

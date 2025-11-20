@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity,Image} from 'react-native';
 import * as CourseData from '../data/coursesData';
 
-export default function CourseScreen({ route }) {
+export default function CourseScreen({ route,navigation }) {
   
   const { title } = route.params;
   const coursesData = CourseData.coursesData;
@@ -15,11 +15,7 @@ export default function CourseScreen({ route }) {
     );
   }
   
-  
-  
   const course = coursesData[title];
-
-  
   const [currentSection, setCurrentSection] = useState(0);
 
   if (!course) {
@@ -38,7 +34,8 @@ export default function CourseScreen({ route }) {
       setCurrentSection(currentSection + 1);
     } else {
       // Navigate to quiz - to be implemented
-      alert('Quiz feature coming soon!');
+      //alert('Quiz feature coming soon!');
+      navigation.navigate('Quiz', { quiz: course.quiz });
     }
   };
 
