@@ -13,17 +13,32 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.refugeapp",
+      "config": {
+        "googleMapsApiKey":"AIzaSyDPhXPGd4SsBOfaetReCCAwqv2Hdl1VyLM"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.refugeapp",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyChXa1dyNOBdQS2JAfJ7N-iYU9hgb7lrrQ"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "33b2ac2b-244e-48ef-8c18-f393097b7eb9"
+      }
     }
   }
 }
