@@ -65,43 +65,40 @@ export default function QuizScreen({ route, navigation }) {
         </>
       ) : (
         <View style={styles.resultContainer}>
-        <Text style={styles.resultText}>Your Score:</Text>
-        <Text style={styles.scoreText}>
-        {score} / {quiz.length}
-        </Text>
+            <View style={styles.resultBox}>
+              <Text style={styles.resultText}>Your Score</Text>
 
-       {/* Calculates percentage and show pass/fail */}
+              <Text style={styles.scoreText}>
+                {score} / {quiz.length}
+              </Text>
 
-        {(() => {
-        const percentage = (score / quiz.length) * 100;
-        const passed = percentage >= 75;
+              {(() => {
+                const percentage = (score / quiz.length) * 100;
+                const passed = percentage >= 75;
 
-        return (
-            <>
-            <Text
-                style={[
-                styles.resultMessage,
-                { color: passed ? '#22c55e' : '#ef4444' },
-                ]}
-            >
-                {passed
-                ? `✅ Congratulations! You passed with ${percentage.toFixed(0)}%.`
-                : `❌ You scored ${percentage.toFixed(0)}%. You need 75% to pass.`}
-            </Text>
+                return (
+                  <Text
+                    style={[
+                      styles.resultMessage,
+                      { color: passed ? '#22c55e' : '#ef4444' }
+                    ]}
+                  >
+                    {passed
+                      ? `✅ You passed with ${percentage.toFixed(0)}%.`
+                      : `❌ You scored ${percentage.toFixed(0)}%. You need 75% to pass.`}
+                  </Text>
+                );
+              })()}
+            </View>
 
             <TouchableOpacity
-                style={[
-                styles.homeButton,
-                { backgroundColor: passed ? '#2563eb' : '#6b7280' },
-                ]}
-                onPress={() => navigation.navigate('Info')}
+              style={styles.homeButton}
+              onPress={() => navigation.navigate('Info')}
             >
-                <Text style={styles.homeButtonText}>📘 Back to Courses</Text>
+              <Text style={styles.homeButtonText}>📘 Back to Courses</Text>
             </TouchableOpacity>
-            </>
-            );
-        })()}
-        </View>
+          </View>
+
         )}
     </View>
     );
@@ -149,23 +146,53 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 16,
   },
+
   resultContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  flex: 1,
+  justifyContent: 'center',   // centers vertically
+  alignItems: 'center',       // centers horizontally
+  paddingHorizontal: 20,
   },
-  resultText: {
-    color: '#fff',
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  scoreText: {
-    color: '#2563eb',
-    fontSize: 26,
-    fontWeight: 'bold',
-    marginBottom: 30,
-  },
+
+
+  resultBox: {
+  width: '90%',
+  backgroundColor: '#1e3a8a',   // deep blue background
+  borderWidth: 3,
+  borderColor: '#3b82f6',       // blue hue border
+  borderRadius: 12,
+  padding: 20,
+  alignItems: 'center',
+  marginBottom: 25,
+
+  shadowColor: '#000',
+  shadowOpacity: 0.3,
+  shadowRadius: 8,
+  shadowOffset: { width: 0, height: 4 },
+  elevation: 6,
+},
+
+resultText: {
+  color: '#ffffff',
+  fontSize: 22,
+  fontWeight: 'bold',
+  marginBottom: 10,
+},
+
+scoreText: {
+  color: '#ffffff',
+  fontSize: 28,
+  fontWeight: 'bold',
+  marginBottom: 15,
+},
+
+resultMessage: {
+  fontSize: 18,
+  fontWeight: '600',
+  textAlign: 'center',
+  marginTop: 5,
+},
+
   homeButton: {
     backgroundColor: '#2563eb',
     padding: 12,
