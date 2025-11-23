@@ -1,25 +1,7 @@
 import React, { useState } from "react";
-import { 
-  Text, 
-  View, 
-  StyleSheet, 
-  Image, 
-  TextInput, 
-  TouchableOpacity, 
-  Alert,
-  KeyboardAvoidingView,
-  ScrollView,
-  Platform
-} from "react-native";
+import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView, Platform} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function StyledButton({ title, onPress }) {
-  return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Text style={styles.buttonText}>{title}</Text>
-    </TouchableOpacity>
-  );
-}
 
 export default function AccountScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -28,6 +10,8 @@ export default function AccountScreen({ navigation }) {
 
   const baseUrl = "https://backend-jls5.onrender.com";
 
+  //functions call api to create and authenticate users
+  
   const handleSubmit = async () => {
     if (!username.trim() || !password.trim()) {
       Alert.alert("Error", "Please fill out all fields.");
@@ -59,9 +43,9 @@ export default function AccountScreen({ navigation }) {
         return;
       }
 
-      // -------------------------
-      // AUTO-LOGIN AFTER REGISTER
-      // -------------------------
+     
+      // register function 
+
       if (mode === "register") {
         if (response.status === 200 || response.status === 201) {
           try {
@@ -80,6 +64,7 @@ export default function AccountScreen({ navigation }) {
 
             const token = loginData.body;
             await AsyncStorage.setItem("token", token);
+            await AsyncStorage.setItem("username", username);
 
             navigation.navigate("Profile");
             return;
@@ -97,9 +82,9 @@ export default function AccountScreen({ navigation }) {
         return;
       }
 
-      // -------------------------
-      // HANDLE LOGIN
-      // -------------------------
+      
+      // login function
+  
       if (response.status !== 200) {
         Alert.alert(
           "Error",
@@ -115,6 +100,7 @@ export default function AccountScreen({ navigation }) {
       }
 
       await AsyncStorage.setItem("token", token);
+      await AsyncStorage.setItem("username", username);
 
       navigation.navigate("Profile");
 
@@ -184,6 +170,15 @@ export default function AccountScreen({ navigation }) {
     </KeyboardAvoidingView>
   );
 }
+
+function StyledButton({ title, onPress }) {
+  return (
+    <TouchableOpacity style={styles.button} onPress={onPress}>
+      <Text style={styles.buttonText}>{title}</Text>
+    </TouchableOpacity>
+  );
+}
+
 
 const styles = StyleSheet.create({
   container: {
