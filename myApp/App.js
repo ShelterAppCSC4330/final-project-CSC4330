@@ -12,7 +12,7 @@ import { ShelterProvider } from './context/ShelterProvider';
 import { Ionicons } from '@expo/vector-icons';
 import CourseScreen from './screens/CourseScreen';
 import QuizScreen from "./screens/QuizScreen";
-
+import {Progress} from "./context/CourseProgress";
 
 function StyledButton({ title, onPress }) {
   return (
@@ -58,6 +58,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <ShelterProvider>
+      <Progress>
       <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
@@ -88,6 +89,7 @@ export default function App() {
   />
       </Stack.Navigator>
       </NavigationContainer>
+      </Progress>
     </ShelterProvider>
   );
 }

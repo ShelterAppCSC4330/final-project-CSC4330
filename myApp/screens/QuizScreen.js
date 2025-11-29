@@ -1,6 +1,7 @@
 // components/QuizScreen.js
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {CourseProgress} from '../context/CourseProgress';
 
 export default function QuizScreen({ route, navigation }) {
   const { quiz } = route.params; // quiz passed from CourseScreen
@@ -8,8 +9,19 @@ export default function QuizScreen({ route, navigation }) {
   const [selectedOption, setSelectedOption] = useState(null);
   const [score, setScore] = useState(0);
   const [showResult, setShowResult] = useState(false);
-
   const question = quiz[currentQuestion];
+  const { markCourseCompleted } = useContext(CourseProgress);
+  const courseId = route.params.courseId; 
+
+
+  const badgeNames = {
+  "Hurricane Basics": "Hurricane Basics Badge",
+  "Emergency Supplies": "Emergency Supplies Badge",
+  "Evacuation Planning": "Evacuation Planning Badge",
+  "First Aid Basics": "First Aid Basics Badge",
+  "Food Preparation and Storage": "Food Preparation and Storage Badge",
+  "Water": "Water Badge",
+  };
 
   const handleOptionPress = (option) => {
     setSelectedOption(option);
@@ -27,6 +39,16 @@ export default function QuizScreen({ route, navigation }) {
       setShowResult(true);
     }
   };
+
+  useEffect(() => {
+  if (!showResult) return;
+
+  const percentage = (score / quiz.length) * 100;
+
+  if (percentage >= 75) {
+    markCourseCompleted(courseId,badgeNames[courseId]);
+  }
+}, [showResult, score]);
 
   return (
     <View style={styles.container}>

@@ -33,9 +33,8 @@ export default function CourseScreen({ route,navigation }) {
     if (currentSection < course.sections.length - 1) {
       setCurrentSection(currentSection + 1);
     } else {
-      // Navigate to quiz - to be implemented
-      //alert('Quiz feature coming soon!');
-      navigation.navigate('Quiz', { quiz: course.quiz });
+      // Navigate to quiz 
+      navigation.navigate('Quiz', { quiz: course.quiz , courseId: title});
     }
   };
 

@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import { Feather } from '@expo/vector-icons';
 
-function CourseButton({ title, onPress }) {
+
+function CourseButton({ title, onPress, completed }) {
   return (
     <TouchableOpacity style={styles.card} activeOpacity={0.8} onPress = {onPress}>
       <View style={styles.iconContainer}>
@@ -15,9 +17,15 @@ function CourseButton({ title, onPress }) {
         <Text style={styles.cardTitle}>{title}</Text>
         <Text style={styles.description}>Tap to start learning</Text>
         <View style={styles.badge}>
-          <Text style={styles.badgeText}>Start Course →</Text>
+          <Text style={styles.badgeText}>
+             {completed ? "Completed ✓" : "Start Course →"}</Text>
         </View>
       </View>
+      {completed && (
+        <View style={styles.checkWrapper}>
+          <Feather name="check-circle" size={38} color="#22c55e" />
+        </View>
+      )}
     </TouchableOpacity>
   );
 }
@@ -49,6 +57,10 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
 
+  content: {
+  flex: 1,     // push checkmark to the right
+  },
+
   logo: {
     width: 70,
     height: 70,
@@ -61,8 +73,20 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: '#ffffff',  // White text
-    marginBottom: 6,
+    
   },
+
+  checkWrapper: {
+  justifyContent: 'center',       // center vertically
+  alignItems: 'center',           // center horizontally
+  paddingLeft: 10,
+  paddingRight: 4,
+  },
+
+  checkIcon: {
+  marginLeft: 10,
+  },
+
   description: {
     fontSize: 14,
     color: '#9ca3af',  // Light grey
