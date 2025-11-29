@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet,ScrollView,TouchableOpacity } from 'react-native';
 import CourseButton from '../components/CourseButton';
-  
+import { CourseProgress } from '../context/CourseProgress';
+
 
 export default function InfoScreen({ navigation }) {
-  const handleCoursePress = (courseTitle) => {
-    navigation.navigate('Course', { title: courseTitle });
+
+  const { completedCourses } = useContext(CourseProgress);
+  const handleCoursePress = (title) => {
+    navigation.navigate('Course', { title });
   };
   return (
     <ScrollView style={styles.container}>
@@ -14,12 +17,12 @@ export default function InfoScreen({ navigation }) {
       </View>
 
       <View style={styles.coursesContainer}>
-        <CourseButton title="Hurricane Basics" onPress={() => handleCoursePress("Hurricane Basics")}/>
-        <CourseButton title="Emergency Supplies" onPress = {() => handleCoursePress("Emergency Supplies")}/>
-        <CourseButton title="Evacuation Planning" onPress = {() => handleCoursePress("Evacuation Planning")} />
-        <CourseButton title ="First Aid Basics" onPress = {() => handleCoursePress("First Aid Basics")}/>
-        <CourseButton title ="Food Preparation and Storage" onPress = {() => handleCoursePress("Food Preparation and Storage")}/>
-        <CourseButton title ="Water" onPress = {() => handleCoursePress("Water")}/>
+        <CourseButton title="Hurricane Basics"  completed={completedCourses.includes("Hurricane Basics")} onPress={() => handleCoursePress("Hurricane Basics")}/>
+        <CourseButton title="Emergency Supplies"  completed={completedCourses.includes("Emergency Supplies")} onPress = {() => handleCoursePress("Emergency Supplies")}/>
+        <CourseButton title="Evacuation Planning" completed={completedCourses.includes("Evacuation Planning")}  onPress = {() => handleCoursePress("Evacuation Planning")} />
+        <CourseButton title ="First Aid Basics" completed={completedCourses.includes("Evacuation Planning")} onPress = {() => handleCoursePress("First Aid Basics")}/>
+        <CourseButton title ="Food Preparation and Storage" completed={completedCourses.includes("Food Preparation and Storage")}  onPress = {() => handleCoursePress("Food Preparation and Storage")}/>
+        <CourseButton title ="Water" completed={completedCourses.includes("Water")} onPress = {() => handleCoursePress("Water")}/>
       </View>
     </ScrollView>
   );
