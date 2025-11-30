@@ -12,7 +12,8 @@ const ShelterContext = createContext(null);
 
 const SHELTER_CACHE_KEY = "shelters-cache-v1";
 
-// change to true to simulate offline mode for testing
+// change to true to simulate offline mode for testing offline caching behavior
+// must first cache data while online
 const FORCE_OFFLINE = false;
 
 async function fetchSheltersWithCache(
