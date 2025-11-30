@@ -249,7 +249,6 @@ export default function ShelterScreen() {
         initialRegion={initialRegion}
       >
         {!loading &&
-          !loadError &&
           filteredShelters.map((s) => {
             const statusInfo = getStatusInfo(s);
             const id = s.id || s.external_id;
@@ -410,20 +409,18 @@ export default function ShelterScreen() {
               </View>
             )}
 
-            {loadError && !loading && (
-              <Text style={styles.emptyText}>{loadError}</Text>
-            )}
-
-            {!loading && !loadError && (
+            {!loading && (
               <>
-                {/*filter on status*/}
+                {loadError && <Text style={styles.emptyText}>{loadError}</Text>}
+
+                {/* filter on status */}
                 <View style={styles.filterRow}>
                   {renderFilterButton("all", "All")}
                   {renderFilterButton("open", "Open")}
                   {renderFilterButton("other", "Other")}
                 </View>
 
-                {/*filter on distance*/}
+                {/* filter on distance */}
                 <View style={styles.filterRow}>
                   {renderDistanceButton("any", "Any distance")}
                   {renderDistanceButton("5", "≤ 5 mi")}
