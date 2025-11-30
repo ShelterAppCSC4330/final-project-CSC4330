@@ -9,10 +9,11 @@ import InfoScreen from './screens/InfoScreen';
 import ProfileScreen from "./screens/ProfileScreen";
 import ShelterScreen from './screens/ShelterScreen';
 import { ShelterProvider } from './context/ShelterProvider';
-import { Ionicons } from '@expo/vector-icons';
 import CourseScreen from './screens/CourseScreen';
 import QuizScreen from "./screens/QuizScreen";
-import {Progress} from "./context/CourseProgress";
+import { useState, useEffect } from "react";
+import * as Location from "expo-location";
+
 
 function StyledButton({ title, onPress }) {
   return (
@@ -23,6 +24,56 @@ function StyledButton({ title, onPress }) {
 }
 
 function HomeScreen({ navigation }) {
+
+  // Logic for NOAA weather alerts
+  const [alertMessage, setAlertMessage] = useState("Loading weather alerts...");
+
+  // Fetch NOAA weather alerts 
+  useEffect(() => {
+    const loadNoaaAlerts = async () => {
+      try {
+        // Request location 
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          setAlertMessage("Location permission denied.");
+          return;
+        }
+
+        // Get user location
+        let location = await Location.getCurrentPositionAsync({});
+        const { latitude, longitude } = location.coords;
+
+        // NOAA Alert API
+        const response = await fetch(
+          `https://api.weather.gov/alerts/active?point=${latitude},${longitude}`,
+          {
+            headers: {
+              "User-Agent": "RefugeApp (athor31@lsu.edu)",
+              "Accept": "application/ld+json"
+            }
+          }
+        );
+
+        const data = await response.json();
+
+        // If alerts exist
+        if (data.features && data.features.length > 0) {
+          const alert = data.features[0].properties;
+          const title = alert.headline || "Weather Alert";
+          const desc = alert.description || "";
+          setAlertMessage(`${title}\n\n${desc}`);
+        } else {
+          setAlertMessage("No active weather alerts in your area.");
+        }
+
+      } catch (err) {
+        console.log(err);
+        setAlertMessage("Unable to load alerts.");
+      }
+    };
+
+    loadNoaaAlerts();
+  }, []); 
   return (
    <View style={styles.container}>
     <View style={styles.top}>
@@ -32,12 +83,9 @@ function HomeScreen({ navigation }) {
       />
       <Text  style ={styles.welcomeText}>Welcome to Refuge!{'\n'}Preparedness begins here.</Text>
 
-      {/* Notification Center */}
       <View style={styles.notificationBox}>
         <Text style={styles.notificationTitle}>Notification Center</Text>
-        <Text style={styles.notificationText}>
-          No new alerts. Check back for emergency updates and important notices.
-        </Text>
+        <Text style={styles.notificationText}>{alertMessage}</Text>
       </View>
         
       <View style={{ flex: 1 }} />
@@ -58,7 +106,6 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <ShelterProvider>
-      <Progress>
       <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
@@ -89,7 +136,6 @@ export default function App() {
   />
       </Stack.Navigator>
       </NavigationContainer>
-      </Progress>
     </ShelterProvider>
   );
 }
