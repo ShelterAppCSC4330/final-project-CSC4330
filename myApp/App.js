@@ -1,19 +1,18 @@
-import * as React from "react";
-import { Text, View, Button, StyleSheet, Image, TextInput  } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { TouchableOpacity} from "react-native";
-import AccountScreen from './screens/AccountScreen';
-import DropdownMenu from './components/DropdownMenu';
-import InfoScreen from './screens/InfoScreen';
-import ProfileScreen from "./screens/ProfileScreen";
-import ShelterScreen from './screens/ShelterScreen';
-import { ShelterProvider } from './context/ShelterProvider';
-import CourseScreen from './screens/CourseScreen';
-import QuizScreen from "./screens/QuizScreen";
-import { useState, useEffect } from "react";
 import * as Location from "expo-location";
 
+import AccountScreen from "./screens/AccountScreen";
+import DropdownMenu from "./components/DropdownMenu";
+import InfoScreen from "./screens/InfoScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import ShelterScreen from "./screens/ShelterScreen";
+import { ShelterProvider } from "./context/ShelterProvider";
+import CourseScreen from "./screens/CourseScreen";
+import QuizScreen from "./screens/QuizScreen";
+import ChatbotScreen from "./screens/ChatbotScreen";
 
 function StyledButton({ title, onPress }) {
   return (
@@ -24,15 +23,13 @@ function StyledButton({ title, onPress }) {
 }
 
 function HomeScreen({ navigation }) {
-
-  // Logic for NOAA weather alerts
+  // NOAA weather alerts
   const [alertMessage, setAlertMessage] = useState("Loading weather alerts...");
 
-  // Fetch NOAA weather alerts 
   useEffect(() => {
     const loadNoaaAlerts = async () => {
       try {
-        // Request location 
+        // Request location permission
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== "granted") {
           setAlertMessage("Location permission denied.");
@@ -49,8 +46,8 @@ function HomeScreen({ navigation }) {
           {
             headers: {
               "User-Agent": "RefugeApp (athor31@lsu.edu)",
-              "Accept": "application/ld+json"
-            }
+              Accept: "application/ld+json",
+            },
           }
         );
 
@@ -65,7 +62,6 @@ function HomeScreen({ navigation }) {
         } else {
           setAlertMessage("No active weather alerts in your area.");
         }
-
       } catch (err) {
         console.log(err);
         setAlertMessage("Unable to load alerts.");
@@ -73,30 +69,40 @@ function HomeScreen({ navigation }) {
     };
 
     loadNoaaAlerts();
-  }, []); 
-  return (
-   <View style={styles.container}>
-    <View style={styles.top}>
-      <Image
-        source={require("./assets/Frame 1-3.png")}
-        style={{ width: 200, height: 200, resizeMode: "contain", marginVertical: 0 }}
-      />
-      <Text  style ={styles.welcomeText}>Welcome to Refuge!{'\n'}Preparedness begins here.</Text>
+  }, []);
 
-      <View style={styles.notificationBox}>
-        <Text style={styles.notificationTitle}>Notification Center</Text>
-        <Text style={styles.notificationText}>{alertMessage}</Text>
+  return (
+    <View style={styles.container}>
+      <View style={styles.top}>
+        <Image
+          source={require("./assets/Frame 1-3.png")}
+          style={{ width: 200, height: 200, resizeMode: "contain", marginVertical: 0 }}
+        />
+        <Text style={styles.welcomeText}>
+          Welcome to Refuge!{"\n"}Preparedness begins here.
+        </Text>
+
+        {/* Notification Center */}
+        <View style={styles.notificationBox}>
+          <Text style={styles.notificationTitle}>Notification Center</Text>
+          <Text style={styles.notificationText}>{alertMessage}</Text>
+        </View>
+
+        <View style={{ flex: 1 }} />
+
+        <View style={styles.bottom}>
+          <StyledButton
+            title="Find Shelters"
+            onPress={() => navigation.navigate("Shelters")}
+          />
+
+          {/* Chatbot button */}
+          <StyledButton
+            title="Chat with AI"
+            onPress={() => navigation.navigate("Chatbot")}
+          />
+        </View>
       </View>
-        
-      <View style={{ flex: 1 }} />
-      
-      <View style = {styles.bottom}>
-      <StyledButton
-        title="Find Shelters"
-        onPress={() => navigation.navigate("Shelters")}
-      />
-      </View>
-    </View>
     </View>
   );
 }
@@ -107,48 +113,62 @@ export default function App() {
   return (
     <ShelterProvider>
       <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: '#1f2937', 
-          },
-          headerTintColor: '#ffffff', 
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: 20,
-          },
-        }}
-      >
-        <Stack.Screen name="Home" component={HomeScreen} options={({ navigation }) => ({
-          title: 'Home',
-          headerRight: () => <DropdownMenu navigation={navigation} />,
-        })}
-    />
-    <Stack.Screen name="Shelters" component={ShelterScreen} />
-    <Stack.Screen name="Account" component={AccountScreen} />
-    <Stack.Screen name="Info" component={InfoScreen} />
-    <Stack.Screen name="Profile" component={ProfileScreen} />
-    <Stack.Screen name="Quiz" component={QuizScreen} options={{ title: "Course Quiz" }} />
-    <Stack.Screen name="Course" component={CourseScreen}
-      options={({ route }) => ({
-      title: route.params?.title || 'Course'
-    })}
-  />
-      </Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: "#1f2937",
+            },
+            headerTintColor: "#ffffff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              fontSize: 20,
+            },
+          }}
+        >
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={({ navigation }) => ({
+              title: "Home",
+              headerRight: () => <DropdownMenu navigation={navigation} />,
+            })}
+          />
+
+          <Stack.Screen name="Shelters" component={ShelterScreen} />
+          <Stack.Screen name="Account" component={AccountScreen} />
+          <Stack.Screen name="Info" component={InfoScreen} />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen
+            name="Quiz"
+            component={QuizScreen}
+            options={{ title: "Course Quiz" }}
+          />
+          <Stack.Screen
+            name="Course"
+            component={CourseScreen}
+            options={({ route }) => ({
+              title: route.params?.title || "Course",
+            })}
+          />
+          <Stack.Screen
+            name="Chatbot"
+            component={ChatbotScreen}
+            options={{ title: "AI Assistant" }}
+          />
+        </Stack.Navigator>
       </NavigationContainer>
     </ShelterProvider>
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#1f2937",
-    borderColor: "#2563eb",     
-    borderWidth: 5,             
-    borderRadius: 2,                        
-    overflow: "hidden",   
+    borderColor: "#2563eb",
+    borderWidth: 5,
+    borderRadius: 2,
+    overflow: "hidden",
   },
   top: {
     flex: 1,
@@ -165,13 +185,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
   },
-  
-   notificationBox: {
-    backgroundColor: "#2563eb", 
+  notificationBox: {
+    backgroundColor: "#2563eb",
     padding: 20,
     borderRadius: 20,
     width: "70%",
-    alignSelf: "center", 
+    alignSelf: "center",
     marginTop: 30,
     shadowColor: "#2563eb",
     shadowOffset: { width: 0, height: 2 },
@@ -187,16 +206,17 @@ const styles = StyleSheet.create({
   },
   notificationText: {
     fontSize: 16,
-    color: "#d1d5db", 
+    color: "#d1d5db",
   },
-  welcomeText:{
+  welcomeText: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    textAlign: 'center',
+    fontWeight: "bold",
+    color: "#ffffff",
+    textAlign: "center",
     marginTop: 20,
-  }
+  },
 });
+
 const buttonStyles = StyleSheet.create({
   button: {
     backgroundColor: "#2563eb",
@@ -211,7 +231,4 @@ const buttonStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-
-
-
 });
