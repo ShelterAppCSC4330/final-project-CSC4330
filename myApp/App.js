@@ -1,13 +1,16 @@
-import * as React from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { TouchableOpacity } from "react-native";
-import AccountScreen from './screens/AccountScreen';
-import DropdownMenu from './components/DropdownMenu';
-import InfoScreen from './screens/InfoScreen';
+import * as Location from "expo-location";
+
+import AccountScreen from "./screens/AccountScreen";
+import DropdownMenu from "./components/DropdownMenu";
+import InfoScreen from "./screens/InfoScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import CourseScreen from './screens/CourseScreen';
+import ShelterScreen from "./screens/ShelterScreen";
+import { ShelterProvider } from "./context/ShelterProvider";
+import CourseScreen from "./screens/CourseScreen";
 import QuizScreen from "./screens/QuizScreen";
 import ChatbotScreen from "./screens/ChatbotScreen";
 
@@ -20,6 +23,54 @@ function StyledButton({ title, onPress }) {
 }
 
 function HomeScreen({ navigation }) {
+  // NOAA weather alerts
+  const [alertMessage, setAlertMessage] = useState("Loading weather alerts...");
+
+  useEffect(() => {
+    const loadNoaaAlerts = async () => {
+      try {
+        // Request location permission
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          setAlertMessage("Location permission denied.");
+          return;
+        }
+
+        // Get user location
+        let location = await Location.getCurrentPositionAsync({});
+        const { latitude, longitude } = location.coords;
+
+        // NOAA Alert API
+        const response = await fetch(
+          `https://api.weather.gov/alerts/active?point=${latitude},${longitude}`,
+          {
+            headers: {
+              "User-Agent": "RefugeApp (athor31@lsu.edu)",
+              Accept: "application/ld+json",
+            },
+          }
+        );
+
+        const data = await response.json();
+
+        // If alerts exist
+        if (data.features && data.features.length > 0) {
+          const alert = data.features[0].properties;
+          const title = alert.headline || "Weather Alert";
+          const desc = alert.description || "";
+          setAlertMessage(`${title}\n\n${desc}`);
+        } else {
+          setAlertMessage("No active weather alerts in your area.");
+        }
+      } catch (err) {
+        console.log(err);
+        setAlertMessage("Unable to load alerts.");
+      }
+    };
+
+    loadNoaaAlerts();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.top}>
@@ -34,9 +85,7 @@ function HomeScreen({ navigation }) {
         {/* Notification Center */}
         <View style={styles.notificationBox}>
           <Text style={styles.notificationTitle}>Notification Center</Text>
-          <Text style={styles.notificationText}>
-            No new alerts. Check back for emergency updates and important notices.
-          </Text>
+          <Text style={styles.notificationText}>{alertMessage}</Text>
         </View>
 
         <View style={{ flex: 1 }} />
@@ -47,7 +96,7 @@ function HomeScreen({ navigation }) {
             onPress={() => navigation.navigate("Shelters")}
           />
 
-          {/* ⭐ NEW BUTTON TO CHATBOT */}
+          {/* Chatbot button */}
           <StyledButton
             title="Chat with AI"
             onPress={() => navigation.navigate("Chatbot")}
@@ -58,63 +107,57 @@ function HomeScreen({ navigation }) {
   );
 }
 
-function SheltersScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>🏠 Available Shelters</Text>
-      <Text style={styles.text}>Here’s where shelter info will go.</Text>
-    </View>
-  );
-}
-
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: '#1f2937',
-          },
-          headerTintColor: '#ffffff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: 20,
-          },
-        }}
-      >
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={({ navigation }) => ({
-            title: 'Home',
-            headerRight: () => <DropdownMenu navigation={navigation} />,
-          })}
-        />
+    <ShelterProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: "#1f2937",
+            },
+            headerTintColor: "#ffffff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              fontSize: 20,
+            },
+          }}
+        >
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={({ navigation }) => ({
+              title: "Home",
+              headerRight: () => <DropdownMenu navigation={navigation} />,
+            })}
+          />
 
-        <Stack.Screen name="Shelters" component={SheltersScreen} />
-        <Stack.Screen name="Account" component={AccountScreen} />
-        <Stack.Screen name="Info" component={InfoScreen} />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="Quiz" component={QuizScreen} options={{ title: "Course Quiz" }} />
-
-        <Stack.Screen
-          name="Course"
-          component={CourseScreen}
-          options={({ route }) => ({
-            title: route.params?.title || 'Course'
-          })}
-        />
-
-        {/* ⭐ NEW CHATBOT SCREEN */}
-        <Stack.Screen
-          name="Chatbot"
-          component={ChatbotScreen}
-          options={{ title: "AI Assistant" }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Screen name="Shelters" component={ShelterScreen} />
+          <Stack.Screen name="Account" component={AccountScreen} />
+          <Stack.Screen name="Info" component={InfoScreen} />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen
+            name="Quiz"
+            component={QuizScreen}
+            options={{ title: "Course Quiz" }}
+          />
+          <Stack.Screen
+            name="Course"
+            component={CourseScreen}
+            options={({ route }) => ({
+              title: route.params?.title || "Course",
+            })}
+          />
+          <Stack.Screen
+            name="Chatbot"
+            component={ChatbotScreen}
+            options={{ title: "AI Assistant" }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ShelterProvider>
   );
 }
 
@@ -131,18 +174,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
-    marginTop: 60,
+    marginTop: 60, // push title down a bit from the very top
   },
   bottom: {
     justifyContent: "flex-end",
     alignItems: "center",
-    marginBottom: 40,
+    marginBottom: 40, // space from bottom
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
   },
-
   notificationBox: {
     backgroundColor: "#2563eb",
     padding: 20,
