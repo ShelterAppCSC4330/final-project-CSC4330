@@ -115,9 +115,6 @@ return (
             <View style={styles.tag}>
               <Text style={styles.tagText}>Your Checklist</Text>
             </View>
-            <TouchableOpacity onPress={() => setUsername("Refuge User")}>
-              <Feather name="edit-2" size={18} color="#fff" />
-            </TouchableOpacity>
           </View>
 
           <ProgressBar value={progress} />

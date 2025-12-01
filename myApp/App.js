@@ -13,6 +13,7 @@ import { ShelterProvider } from "./context/ShelterProvider";
 import CourseScreen from "./screens/CourseScreen";
 import QuizScreen from "./screens/QuizScreen";
 import ChatbotScreen from "./screens/ChatbotScreen";
+import {Progress} from "./context/CourseProgress";
 
 function StyledButton({ title, onPress }) {
   return (
@@ -112,6 +113,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <ShelterProvider>
+    <Progress>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
@@ -157,6 +159,7 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
+      </Progress>
     </ShelterProvider>
   );
 }
