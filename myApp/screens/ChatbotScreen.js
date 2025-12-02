@@ -8,23 +8,24 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+
+// Replace with your computer's IP address (find it in Wi-Fi settings)
+// Example: "http://192.168.1.105:3000/api/chat"
+const API_URL = "http://192.168.1.177:3000/api/chat";
 
 export default function ChatbotScreen() {
   const [messages, setMessages] = useState([
     { id: "1", text: "Hello! How can I assist you today?", sender: "bot" },
   ]);
   const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const flatListRef = useRef();
 
-  // Placeholder AI logic — replace with API later
-  const fakeAIResponse = (userMessage) => {
-    return `You said: "${userMessage}". More intelligent responses will come once we hook up the backend.`;
-  };
-
-  const sendMessage = () => {
-    if (!input.trim()) return;
+  const sendMessage = async () => {
+    if (!input.trim() || isLoading) return;
 
     const userMsg = {
       id: Date.now().toString(),
@@ -34,17 +35,34 @@ export default function ChatbotScreen() {
 
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
+    setIsLoading(true);
 
-    setTimeout(() => {
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: userMsg.text }),
+      });
+
+      const data = await response.json();
+
       const botMsg = {
         id: (Date.now() + 1).toString(),
-        text: fakeAIResponse(userMsg.text),
+        text: data.response,
         sender: "bot",
       };
       setMessages((prev) => [...prev, botMsg]);
-
+    } catch (error) {
+      const errorMsg = {
+        id: (Date.now() + 1).toString(),
+        text: "Sorry, I couldn't connect. Please try again.",
+        sender: "bot",
+      };
+      setMessages((prev) => [...prev, errorMsg]);
+    } finally {
+      setIsLoading(false);
       flatListRef.current?.scrollToEnd({ animated: true });
-    }, 500);
+    }
   };
 
   const renderItem = ({ item }) => (
@@ -71,7 +89,6 @@ export default function ChatbotScreen() {
         }
       />
 
-      {/* Input Bar */}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
@@ -82,13 +99,18 @@ export default function ChatbotScreen() {
             placeholderTextColor="#9ca3af"
             value={input}
             onChangeText={setInput}
+            editable={!isLoading}
           />
           <TouchableOpacity
-            style={[styles.sendButton, !input.trim() && { opacity: 0.4 }]}
+            style={[styles.sendButton, (!input.trim() || isLoading) && { opacity: 0.4 }]}
             onPress={sendMessage}
-            disabled={!input.trim()}
+            disabled={!input.trim() || isLoading}
           >
-            <Ionicons name="send" size={20} color="#fff" />
+            {isLoading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Ionicons name="send" size={20} color="#fff" />
+            )}
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
