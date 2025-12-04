@@ -11,9 +11,13 @@ OUR PRODUCT aggregates and verifies data from available sources like Shelter API
 
 
 ### Names of all group members
+Aiden Thornton, Mabby Gavilan-Abanto, Candor Alemu, Mason Khonsari, Jeramyah Malveaux
 
+Canva Slides:
+https://www.canva.com/design/DAG6GmyBKzs/T-6Ttn0tn8oPe6SeQ9hmfQ/edit?utm_content=DAG6GmyBKzs&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
-GitHub Repository URL
-https://github.com/maby200/final-project-CSC4330
+Github URl Shows both Repos
+https://github.com/ShelterAppCSC4330
+
 <img width="468" height="379" alt="image" src="https://github.com/user-attachments/assets/208ea9be-988c-4b44-b4e8-66dce86b1b2d" />
 
